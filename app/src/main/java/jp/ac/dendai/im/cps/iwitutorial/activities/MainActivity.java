@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import jp.ac.dendai.im.cps.iwitutorial.R;
 import jp.ac.dendai.im.cps.iwitutorial.fragments.CanvasFragment;
+import jp.ac.dendai.im.cps.iwitutorial.fragments.MainFragment;
 import jp.ac.dendai.im.cps.iwitutorial.fragments.SensorSampleFragment;
 import jp.ac.dendai.im.cps.iwitutorial.fragments.SurfaceSampleFragment;
 
@@ -62,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         navView.setNavigationItemSelectedListener(this);
+
+        manager.beginTransaction()
+                .replace(R.id.container, MainFragment.newInstance())
+                .commit();
     }
 
     @Override
@@ -70,9 +75,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_home: {
-                Intent intent = new Intent(this, this.getClass());
-                startActivity(intent);
-                finish();
+                toolbar.setTitle("CPSLAB Android Tutorial");
+                navView.setCheckedItem(R.id.nav_home);
+                manager.beginTransaction()
+                        .replace(R.id.container, MainFragment.newInstance())
+                        .commit();
                 break;
             }
             case R.id.nav_map: {
