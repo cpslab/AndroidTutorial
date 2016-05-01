@@ -1,6 +1,25 @@
 <resources>
-    <string name="app_name">IwiTutorial</string>
+    <string name="app_name">AndroidTutorial</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_settings">Settings</string>
+    <string name="lightExp">LightSensor :</string>
+
+    <string name="xText">加速度x軸: </string>
+    <string name="defaultText">取得中…</string>
+    <string name="yText">加速度Y軸: </string>
+    <string name="zText">加速度Z軸: </string>
+    <string name="azimuthText">"方位: "</string>
+    <string name="pitchText">"ピッチ: "</string>
+    <string name="rollText">"ロール: "</string>
+    <string name="txtLight">"照度: "</string>
+    <string name="gpsText">"GPS情報: "</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="top_text">
+        CPSLAB の Android Tutorial アプリです。
+        各サンプルには Navigation Menu から確認して下さい。
+        資料は以下のボタンをクリックするとブラウザが起動し閲覧できます。
+    </string>
+    <string name="link_text"></string>
 </resources>

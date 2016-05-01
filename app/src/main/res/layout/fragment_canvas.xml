@@ -2,31 +2,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp"
-    android:paddingBottom="0dp"
-    tools:context="jp.ac.dendai.im.cps.iwitutorial.CanvasFragment">
+    tools:context=".fragments.CanvasFragment">
 
-    <jp.ac.lecture.canvastest.SampleGraphicsView
+    <jp.ac.dendai.im.cps.iwitutorial.sampleviews.SampleGraphicsView
         android:id="@+id/canvas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:text="@string/lightExp"
             android:id="@+id/textView"/>
 
         <TextView
             android:id="@+id/txtLight"
-            android:text="@string/hello_world"
+            android:text="@string/hello_blank_fragment"
+            android:textColor="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
