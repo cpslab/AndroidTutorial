@@ -22,4 +22,9 @@
         資料は以下のボタンをクリックするとブラウザが起動し閲覧できます。
     </string>
     <string name="link_text">https://github.com/cpslab/AndroidTutorial/blob/master/doc/index.md</string>
+
+    <string name="lifecycle_description">
+        ActivityとFragmentのライフサイクルのメソッドが呼ばれたタイミングでメソッド名をリストに追加します。\n
+        またログも出力するのでLogCatで確認が可能です。
+    </string>
 </resources>
