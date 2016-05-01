@@ -1,4 +1,4 @@
-package jp.ac.dendai.im.cps.iwitutorial;
+package jp.ac.dendai.im.cps.iwitutorial.sampleviews;
 
 import android.annotation.TargetApi;
 import android.content.Context;

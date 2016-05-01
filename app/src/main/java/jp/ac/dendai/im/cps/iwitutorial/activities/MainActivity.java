@@ -1,8 +1,11 @@
-package jp.ac.dendai.im.cps.iwitutorial;
+package jp.ac.dendai.im.cps.iwitutorial.activities;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
+import jp.ac.dendai.im.cps.iwitutorial.R;
+import jp.ac.dendai.im.cps.iwitutorial.fragments.SurfaceSampleFragment;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -17,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         manager = getSupportFragmentManager();
 
         manager.beginTransaction()
-                .replace(R.id.container, SensorSampleFragment.newInstance())
+                .replace(R.id.container, SurfaceSampleFragment.newInstance())
                 .commit();
     }
 }
