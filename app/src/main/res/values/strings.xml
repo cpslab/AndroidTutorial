@@ -17,9 +17,9 @@
     <string name="title_activity_maps">Map</string>
 
     <string name="top_text">
-        CPSLAB の Android Tutorial アプリです。
-        各サンプルには Navigation Menu から確認して下さい。
+        CPSLAB の Android Tutorial アプリです。\n
+        各サンプルには Navigation Menu から確認して下さい。\n
         資料は以下のボタンをクリックするとブラウザが起動し閲覧できます。
     </string>
-    <string name="link_text"></string>
+    <string name="link_text">https://github.com/cpslab/AndroidTutorial/blob/master/doc/index.md</string>
 </resources>
