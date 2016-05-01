@@ -1,4 +1,4 @@
-package jp.ac.dendai.im.cps.iwitutorial.fragments;
+package jp.ac.dendai.im.cps.iwitutorial.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -23,9 +23,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        setTitle("Map");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
