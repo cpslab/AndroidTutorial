@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         manager = getSupportFragmentManager();
 
         manager.beginTransaction()
-                .replace(R.id.container, CanvasFragment.newInstance())
+                .replace(R.id.container, SensorSampleFragment.newInstance())
                 .commit();
     }
 }
