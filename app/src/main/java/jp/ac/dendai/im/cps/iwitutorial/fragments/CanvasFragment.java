@@ -1,4 +1,4 @@
-package jp.ac.dendai.im.cps.iwitutorial;
+package jp.ac.dendai.im.cps.iwitutorial.fragments;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import jp.ac.dendai.im.cps.iwitutorial.R;
+import jp.ac.dendai.im.cps.iwitutorial.sampleviews.SampleGraphicsView;
 
 public class CanvasFragment extends Fragment implements SensorEventListener {
     private static final String TAG = CanvasFragment.class.getSimpleName();

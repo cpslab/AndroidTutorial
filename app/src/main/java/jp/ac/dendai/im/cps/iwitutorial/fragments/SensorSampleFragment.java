@@ -1,4 +1,4 @@
-package jp.ac.dendai.im.cps.iwitutorial;
+package jp.ac.dendai.im.cps.iwitutorial.fragments;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -14,12 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.List;
-import java.util.Timer;
+
+import jp.ac.dendai.im.cps.iwitutorial.R;
 
 public class SensorSampleFragment extends Fragment implements View.OnClickListener, SensorEventListener, LocationListener {
     private final static String TAG = SensorSampleFragment.class.getSimpleName();

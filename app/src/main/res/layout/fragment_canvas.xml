@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jp.ac.dendai.im.cps.iwitutorial.CanvasFragment">
+    tools:context=".fragments.CanvasFragment">
 
-    <jp.ac.dendai.im.cps.iwitutorial.SampleGraphicsView
+    <jp.ac.dendai.im.cps.iwitutorial.sampleviews.SampleGraphicsView
         android:id="@+id/canvas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
