@@ -4,3 +4,4 @@ CPSLABのゼミ生用AndroidTutorialですが他の人でも参考にできる�
 なにか思うところがあればissue立てたりpull requestをお願いします。頼む。  
 講義資料は[こちら](doc/document.md)
 
+google_maps_api.xmlは自分で取得して設定してください。
