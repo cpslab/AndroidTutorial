@@ -14,11 +14,11 @@ import jp.ac.dendai.im.cps.iwitutorial.R;
 public class LifeCycleFragment extends Fragment {
     private static final String TAG = LifeCycleFragment.class.getSimpleName();
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_SUBTITLE = "sub_title";
+    private static final String ARG_MESSAGE = "message";
 
-    private String mParam1;
-    private String mParam2;
+    private String subTitle;
+    private String message;
 
     private OnFragmentInteractionListener mListener;
     private Context mContext;
@@ -27,11 +27,11 @@ public class LifeCycleFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static LifeCycleFragment newInstance(String param1, String param2) {
+    public static LifeCycleFragment newInstance(String subTitle, String message) {
         LifeCycleFragment fragment = new LifeCycleFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_SUBTITLE, subTitle);
+        args.putString(ARG_MESSAGE, message);
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,31 +47,31 @@ public class LifeCycleFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
 
-        mListener.onFragmentLogMessage(TAG, "onAttach() called with: " + "context = [" + context + "]");
+        mListener.onFragmentLogMessage(TAG, "onAttach()");
         mContext = context;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListener.onFragmentLogMessage(TAG, "onCreate() called with: " + "savedInstanceState = [" + savedInstanceState + "]");
+        mListener.onFragmentLogMessage(TAG, "onCreate()");
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            subTitle = getArguments().getString(ARG_SUBTITLE);
+            message = getArguments().getString(ARG_MESSAGE);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_lifecycle, container, false);
-        mListener.onFragmentLogMessage(TAG, "onCreateView() called with: " + "inflater = [" + inflater + "], container = [" + container + "], savedInstanceState = [" + savedInstanceState + "]");
+        mListener.onFragmentLogMessage(TAG, "onCreateView()");
 
-        TextView param1Text = (TextView) v.findViewById(R.id.param_1);
-        TextView param2Text = (TextView) v.findViewById(R.id.param_2);
+        TextView subTitleTextView = (TextView) v.findViewById(R.id.sub_title);
+        TextView messageTextView = (TextView) v.findViewById(R.id.message);
 
-        param1Text.setText(mParam1);
-        param2Text.setText(mParam2);
+        subTitleTextView.setText(subTitle);
+        messageTextView.setText(message);
 
         return v;
     }
@@ -79,49 +79,49 @@ public class LifeCycleFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mListener.onFragmentLogMessage(TAG, "onActivityCreated() called with: " + "savedInstanceState = [" + savedInstanceState + "]");
+        mListener.onFragmentLogMessage(TAG, "onActivityCreated()");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mListener.onFragmentLogMessage(TAG, "onStart() called with: " + "");
+        mListener.onFragmentLogMessage(TAG, "onStart()");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mListener.onFragmentLogMessage(TAG, "onResume() called with: " + "");
+        mListener.onFragmentLogMessage(TAG, "onResume()");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mListener.onFragmentLogMessage(TAG, "onPause() called with: " + "");
+        mListener.onFragmentLogMessage(TAG, "onPause()");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mListener.onFragmentLogMessage(TAG, "onStop() called with: " + "");
+        mListener.onFragmentLogMessage(TAG, "onStop()");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mListener.onFragmentLogMessage(TAG, "onDestroyView() called with: " + "");
+        mListener.onFragmentLogMessage(TAG, "onDestroyView()");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mListener.onFragmentLogMessage(TAG, "onDestroy() called with: " + "");
+        mListener.onFragmentLogMessage(TAG, "onDestroy()");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener.onFragmentLogMessage(TAG, "onDetach() called with: " + "");
+        mListener.onFragmentLogMessage(TAG, "onDetach()");
         mListener = null;
     }
 
