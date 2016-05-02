@@ -360,6 +360,43 @@ public void onLocationChanged(Location location) {
 }
 ```
 
+# Support Library
+新しいAPIを昔のプラットフォームでも動かせるようにしたもの。  
+よく使うのはandroid.support.v4とandroid.support.v7  
+v4とかv7はAPI4，7以上の端末なら動きますよってこと  
+
+# Support Design Library
+Marshmallow以降ではデフォルトになっているMaterial Designを昔のプラットフォームでも適応させるためのもの  
+
+- Snackbar
+- Floating Action Button
+- Floating labels for editing text
+- Navigation View
+- Tabs
+- CoordinatorLayout and etc..
+- Collapsing Toolbars
+
+# RecyclerView
+ListViewにかわる新たなリストのコンポーネント  
+ListViewはすこし凝ったことをしようとするとすぐに限界がくる。  
+RecyclerViewはListViewをより自由にカスタマイズできるもの  
+しかし、今までListViewの内部で実装されていたものが実装されていないので、はじめは辛いかもしれない。  
+例えば、OnItemClickListenerとかデフォルトではItem間のdividerがなかったりとか  
+
+```java
+mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+mRecyclerView.setAdapter(adapter);
+```
+
+しかし横スクロールのViewであったりGridのListViewであったりとかのレイアウトに対してのカスタマイズは協力である。  
+上のコードのsetLayoutManagerの部分でGridLayoutManagerにしたり、カスタムLayoutManagerにしたりと簡単に変えることができる。
+
+また、カスタマイズしたい部分のみカスタマイズできる点は非常に協力だと思う。  
+
+## RecyclerViewはListViewの代替じゃない？
+参考<http://sys1yagi.hatenablog.com/entry/2015/01/09/090000>
+
 # ベストプラクティス
 <https://github.com/futurice/android-best-practices/blob/master/translations/Japanese/README.ja.md>
 
@@ -371,3 +408,6 @@ public void onLocationChanged(Location location) {
 
 # Material icons
 <https://design.google.com/icons/>
+
+# RxJava/RxAndroid and RecyclerView
+<https://github.com/cpslab/GoldenProfiles>
