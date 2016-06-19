@@ -6,5 +6,5 @@ CPSLABのゼミ生用AndroidTutorialですが他の人でも参考にできる�
 google_maps_api.xmlは自分で取得して設定してください。
 
 ## 講義資料
-- 導入編 (準備中)
+- [導入編](doc/introduction.md)
 - [基礎編](doc/document.md)
