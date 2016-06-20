@@ -5,6 +5,9 @@ CPSLABのゼミ生用AndroidTutorialですが他の人でも参考にできる�
 
 google_maps_api.xmlは自分で取得して設定してください。
 
+なにか質問あれば気軽にメールください↓
+naoya[あっとまーく]cps.im.dendai.ac.jp
+
 ## 講義資料
 - [導入編](doc/introduction.md)
 - [基礎編](doc/document.md)
