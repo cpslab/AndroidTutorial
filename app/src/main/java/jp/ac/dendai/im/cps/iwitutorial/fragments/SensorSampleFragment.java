@@ -1,6 +1,9 @@
 package jp.ac.dendai.im.cps.iwitutorial.fragments;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -9,15 +12,18 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.List;
+import java.util.Locale;
 
 import jp.ac.dendai.im.cps.iwitutorial.R;
 
@@ -141,19 +147,20 @@ public class SensorSampleFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         if (v.getId() == R.id.btnSwitch) {
             if (!isSensing) {
-                Log.d("Main", String.valueOf(v.getId()));
-
                 //各センサーマネージャーに各センサーのリスナーを登録
-                if (accelerometer != null)
+                if (accelerometer != null) {
                     sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+                }
 
-                if (orientation != null)
+                if (orientation != null) {
                     sensorManager.registerListener(this, orientation, SensorManager.SENSOR_DELAY_UI);
+                }
 
-                if (light != null)
+                if (light != null) {
                     sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_UI);
+                }
 
-                gpsManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+                locationStart();
 
                 isSensing = true;
 
@@ -166,6 +173,33 @@ public class SensorSampleFragment extends Fragment implements View.OnClickListen
 
         }
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 1000 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            locationStart();
+        } else {
+            Toast.makeText(mContext, "GPSの取得はできません", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void locationStart() {
+        gpsManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+
+
+        final boolean gpsEnabled = gpsManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (!gpsEnabled) {
+            Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(settingsIntent);
+        }
+
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
+            return;
+        }
+
+        gpsManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 50, this);
     }
 
     @Override
@@ -192,7 +226,6 @@ public class SensorSampleFragment extends Fragment implements View.OnClickListen
     public void onSensorChanged(SensorEvent event) {
         //センサーの値が変更されたらtextViewを書き換え
         if (event.sensor == accelerometer) {
-            Log.d("Main", String.valueOf(event.values[0]));
             txtAccX.setText(String.format("%.2f", event.values[0]));
             txtAccY.setText(String.format("%.2f", event.values[1]));
             txtAccZ.setText(String.format("%.2f", event.values[2]));
