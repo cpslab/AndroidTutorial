@@ -12,3 +12,4 @@ kamiyama[あっとまーく]cps.im.dendai.ac.jp (2017年)
 ## 講義資料
 - [導入編](doc/introduction.md)
 - [基礎編](doc/document.md)
+- [Sensor](doc/document.md#sensor)
