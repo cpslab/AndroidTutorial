@@ -13,3 +13,6 @@ kamiyama[あっとまーく]cps.im.dendai.ac.jp (2017年)
 - [導入編](doc/introduction.md)
 - [基礎編](doc/document.md)
 - [Sensor](doc/document.md#sensor)
+
+## おすすめ書籍
+- [Master of Fragment](http://tatsu-zine.com/books/master-of-fragments) 
