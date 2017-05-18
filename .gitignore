@@ -1,9 +1,8 @@
 *.iml
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
 /build
 /captures
 google_maps_api.xml.org
+.idea
