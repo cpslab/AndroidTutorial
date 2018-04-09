@@ -1,6 +1,9 @@
 package jp.ac.dendai.im.cps.iwitutorial.fragments;
 
+import android.Manifest;
 import android.content.Context;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -9,13 +12,15 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.ToggleButton;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -23,13 +28,14 @@ import jp.ac.dendai.im.cps.iwitutorial.R;
 
 public class SensorSampleFragment extends Fragment implements View.OnClickListener, SensorEventListener, LocationListener {
     private final static String TAG = SensorSampleFragment.class.getSimpleName();
+    private final int REQUEST_CODE_PERMISSION = 1000;
 
     private Context mContext;
     private SensorManager sensorManager; //センサーマネージャ
     private Sensor accelerometer;    //加速度せンサー
     private Sensor orientation; //回転せンサー
     private Sensor light;        //照度センサー
-    private LocationManager gpsManager; //GPSサー)ビスT
+    private LocationManager gpsManager; //GPSサービス
     private TextView txtAccX;                //X軸の加速度（m/s）
     private TextView txtAccY;                //Y軸の加速度（m/s）
     private TextView txtAccZ;                //Z軸の加速度（m/s）
@@ -63,8 +69,8 @@ public class SensorSampleFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sensor_sample, container, false);
 
-        ToggleButton toggleButton = (ToggleButton) v.findViewById(R.id.btnSwitch);
-        toggleButton.setOnClickListener(this);
+        SwitchCompat toggleSwitch = (SwitchCompat) v.findViewById(R.id.btnSwitch);
+        toggleSwitch.setOnClickListener(this);
 
         //文字表示の取得
         txtAccX = (TextView) v.findViewById(R.id.txtAccX);                //X軸の加速度（m/s）
@@ -93,6 +99,7 @@ public class SensorSampleFragment extends Fragment implements View.OnClickListen
                 TYPE_PROXIMITY	        近接センサー	  cm
                 TYPE_TEMPERATURE	    温度センサー	  ℃
                 注) API Level 8で, TYPE_ORIENTATIONは非推奨となった!　でも書き直すのめんどくさいからそのまま使う
+                    代わりにSensorManager.getOrientation()を使う事が推奨されている
 
                 Android 2.3から
                 TYPE_GRAVITY	        重力センサー	  m/s^2
@@ -141,19 +148,20 @@ public class SensorSampleFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         if (v.getId() == R.id.btnSwitch) {
             if (!isSensing) {
-                Log.d("Main", String.valueOf(v.getId()));
-
                 //各センサーマネージャーに各センサーのリスナーを登録
-                if (accelerometer != null)
+                if (accelerometer != null) {
                     sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+                }
 
-                if (orientation != null)
+                if (orientation != null) {
                     sensorManager.registerListener(this, orientation, SensorManager.SENSOR_DELAY_UI);
+                }
 
-                if (light != null)
+                if (light != null) {
                     sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_UI);
+                }
 
-                gpsManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+                locationStart();
 
                 isSensing = true;
 
@@ -166,6 +174,38 @@ public class SensorSampleFragment extends Fragment implements View.OnClickListen
 
         }
 
+    }
+
+    private void locationStart() {
+        gpsManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+
+        // Android 6.0 以降ではGPSや一部機能で、実行時のパーミッションのリクエストが必要となった
+        // GPSに関するパーミッションが許可されている(Grantedか？)か確認する
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // パーミッションのリクエストをすべきか確認する
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) mContext, Manifest.permission.ACCESS_FINE_LOCATION) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale((Activity) mContext, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                // 既にリクエストは行われていて、ユーザーが 許可しない を選択
+                Toast.makeText(mContext, "権限が許可されていないため、GPS情報は取得できません", Toast.LENGTH_SHORT).show();
+            } else {
+                // パーミッションリクエスト、結果は onRequestPermissionResult で受け取る
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_PERMISSION);
+            }
+            return;
+        }
+
+        gpsManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            locationStart();
+        } else {
+            Toast.makeText(mContext, "GPSを取得には、設定から権限をONにして下さい", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -192,7 +232,6 @@ public class SensorSampleFragment extends Fragment implements View.OnClickListen
     public void onSensorChanged(SensorEvent event) {
         //センサーの値が変更されたらtextViewを書き換え
         if (event.sensor == accelerometer) {
-            Log.d("Main", String.valueOf(event.values[0]));
             txtAccX.setText(String.format("%.2f", event.values[0]));
             txtAccY.setText(String.format("%.2f", event.values[1]));
             txtAccZ.setText(String.format("%.2f", event.values[2]));
