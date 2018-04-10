@@ -27,4 +27,7 @@
         ActivityとFragmentのライフサイクルのメソッドが呼ばれたタイミングでメソッド名をリストに追加します。\n
         またログも出力するのでLogCatで確認が可能です。
     </string>
+    <string name="txtProximity">近接:</string>
+    <string name="txtTemp">温度</string>
+    <string name="txtHumid">湿度</string>
 </resources>
