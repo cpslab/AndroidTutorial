@@ -26,7 +26,7 @@ Androidのバージョンにはそれぞれコードネームが付いている�
 - 6.0 Marshmallow
 - 7.0 Nougat
 - 8.0 Oreo
-- Next...
+- Next Android P
 
 # Activity と Fragment
 ## Activity
@@ -395,6 +395,18 @@ Marshmallow以降ではデフォルトになっているMaterial Designを昔の
 - Tabs
 - CoordinatorLayout and etc..
 - Collapsing Toolbars
+
+# ConstraintLayout
+LinearLayoutやRelativeLayoutにつぐ、新たに登場したレイアウト  
+View制約を付与する事で、配置を決める事ができる  
+また、レイアウトエディタを用いてGUI上で簡単に組むことができる
+
+LinearLayoutに比べてネストが深くなりづらく、RelativeLayoutに比べてパフォーマンスが良いという利点がある  
+RelativeLayoutの代替となる日も近いかもしれない
+
+### 参考
+- [Build a Responsive UI with ConstraintLayout](https://developer.android.com/training/constraint-layout/)
+- [Yukiの技折 ConstraintLayout](http://yuki312.blogspot.jp/2017/03/constraintlayout.html)
 
 # RecyclerView
 ListViewにかわる新たなリストのコンポーネント  
