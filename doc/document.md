@@ -5,9 +5,6 @@
 かなり詳しく説明されている。  
 基礎編くらいまで理解できるとまぁまぁ書けるようになると思う  
 
-## スライド
-SpeakerDeck
-
 # Android とは
 携帯電話用ソフトウェアのプラットフォーム  
 2003年にアンディ・ルービン、リッチ ・マイナー、ニック・シアーズ、クリス・ホワイトがアメリカカリフォルニア州パロアルトに携帯電話向けソフトウェアプラットフォームを開発するAndroid社を設立した。  
@@ -27,7 +24,9 @@ Androidのバージョンにはそれぞれコードネームが付いている�
 - 4.4 KitKat
 - 5.0 Lollipop
 - 6.0 Marshmallow
-- next N
+- 7.0 Nougat
+- 8.0 Oreo
+- Next Android P
 
 # Activity と Fragment
 ## Activity
@@ -41,12 +40,12 @@ Android DevelopersのFragmentのJavadocには
 UIを持ち、そのUIの振る舞いを管理する、Activityの中に組み込むことが出来るコンポーネントがFragment
 となっている。  
 つまりViewを持ちながら、そのControllerのロジックを使いまわせるコンポーネントです。  
-また、UIの描画はActivityではなくFragmentで行う。
+今の開発では、ActivityにFragmentを配置していく事がほとんどです。
 
 ※ android.app.Fragment と android.support.v4.app.Fragment の2つがあるが、基本的に使用するのは後者
 
 # Layout
-Androidアプリのレイアウトはxmlファイルに記述し定義する。  
+Androidアプリの画面レイアウトはxmlファイルに記述し定義する。  
 配置したコンポーネントにidを付けることにより、コードからアクセスが可能になる。
 また、いろいろなパラメータを指定していくことにより、余白は中央寄せ、スタイルなどUIに関する様々なことを指定することができる。
 以下、サンプルアプリのMainActivtyのlayoutのコード
@@ -103,7 +102,7 @@ Androidアプリのレイアウトはxmlファイルに記述し定義する。
 ```
 
 # LifeCycle
-AndroidアプリにはLifeCycleというものがあり、LifeCycleを意識してプログラムを組もことがあると思います。  
+AndroidアプリにはLifeCycleというものがあり、LifeCycleを意識してプログラムを組むことがあると思います。  
 以下の画像がライフサイクルです。左側がActivity、右側がFragment  
 また、サンプルプログラムにLifeCycleの項目があります。そこでどのタイミングで呼ばれているか確認してみよう。  
 
@@ -112,9 +111,9 @@ AndroidアプリにはLifeCycleというものがあり、LifeCycleを意識し�
 ![Activity](image/lifecycle_activity.png)
 ![Fragment](image/lifecycle_fragment.png)
 
-# Avtivity
+# Activity
 ## Context
-ActivityはContextクラスを継承している。このクラスはアプリケーションの情報をもっていたり、システムのサービスにアクセスするときに必要になるオブジェクトである。Fragmentは継承していないのでFragmentでContextを使った操作が必要な場合にはonAttachあたりで保持しておくのが一般的。
+Application,ActivityはContextクラスを継承している。このクラスはアプリケーションの情報をもっていたり、システムのサービスにアクセスするときに必要になるオブジェクトである。Fragmentは継承していないのでFragmentでContextを使った操作が必要な場合にはonAttachあたりで保持しておくのが一般的。
 
 ## 画面遷移
 画面遷移にはIntentを使用する。  
@@ -130,6 +129,9 @@ startActivity(intent);
 ## FragmentManager
 FragmentはFragmentManagerをつかって以下のように管理する。
 
+android.app.Fragment の場合は FragmentManager,  
+android.support.v4.app.Fragment の場合は SupportFragmentManager を用いる
+
 ```java
 FragmentManager manager = getSupportFragmentManager();
 MainFragment fragment = MainFragment.newInstance();
@@ -143,7 +145,7 @@ transaction.commit();
 `manager.beginTransaction()`でFragmentの操作を有効化しcommit()を呼んだ段階でそれまでの操作がすべて反映される。
 
 ## newInstance
-Fragmentは様々なタイミングでコンストラクタが呼ばれる。よってコンストラクタの引数は空である必要がある。  
+Fragmentは様々なタイミングでコンストラクタが呼ばれるため、コンストラクタの引数は空である必要がある。  
 そのため、Fragmentに値を渡すにはnewInstanceメソッドを実装し受け渡しをする。  
 
 ```java
@@ -180,7 +182,7 @@ public void onCreate(Bundle savesInstanceState) {
 ```
 
 #### Fragment自身にsetterを実装してオブジェクトを直接渡してあげれば良いのでは？
-NGです。Fragmentは様々なタイミングでコンストラクタが呼ばれます。ということはそのタイミングでインスタントを作りなおしているということです。  
+NGです。Fragmentは様々なタイミングでコンストラクタが呼ばれます。ということはそのタイミングでインスタンスを作りなおしているということです。  
 その場合setterで渡した値は`null`になってアプリが落ちます。  
 Bundleをかいしてデータを渡すことによりBundleにデータが保存されるため、再び`onCreate()`が呼びだされたタイミングでもデータの取得が可能になります。  
 ※ 主に`onPause()`からの復帰とかで落ちます。自分も始めの頃は悩まされました…
@@ -299,12 +301,30 @@ sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_UI);
 gpsManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
 ```
 
-またGPSはAndroidManifestでPermissionの追加が必須
+またGPSはAndroidManifestでPermissionの追加と、Android6.0以降を対象にパーミッションリクエストが必須
 
 ##### AndroidManifest.xml
 
 ```xml
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+```
+
+##### 実行時のパーミッションリクエスト
+[実行時のパーミッションリクエスト Android Developers](https://developer.android.com/training/permissions/requesting.html?hl=ja)
+Android6.0以降では、GPSなど一部の機能の実行時にパーミッションリクエストが必要
+(ユーザにこの機能を使ってもいいか？を確認する)
+
+```java
+// 1. 実行したい機能のパーミッションが許可されているか？確認
+if (ActivityCompat.checkSelfPermission(Context, Manifest.permission.{実行したい機能}) != PackageManager.PERMISSION_GRANTED) {
+    // 2. 許可されていないので、パーミッションリクエストをすべきか確認する (以前既にしているかどうか)
+    if (ActivityCompat.shouldShowRequestPermissionRationale(Context, Manifest.permission.{実行したい機能}))) {
+        // 3.a 既にリクエストをしていた
+    } else {
+        // 3.b まだリクエストをしてないので、する
+        requestPermissions(new String[]{実行したい機能}, REQUEST_CODE_PERMISSION);
+    }
+}
 ```
 
 ### Listenerの解除
@@ -375,6 +395,18 @@ Marshmallow以降ではデフォルトになっているMaterial Designを昔の
 - Tabs
 - CoordinatorLayout and etc..
 - Collapsing Toolbars
+
+# ConstraintLayout
+LinearLayoutやRelativeLayoutにつぐ、新たに登場したレイアウト  
+View制約を付与する事で、配置を決める事ができる  
+また、レイアウトエディタを用いてGUI上で簡単に組むことができる
+
+LinearLayoutに比べてネストが深くなりづらく、RelativeLayoutに比べてパフォーマンスが良いという利点がある  
+RelativeLayoutの代替となる日も近いかもしれない
+
+### 参考
+- [Build a Responsive UI with ConstraintLayout](https://developer.android.com/training/constraint-layout/)
+- [Yukiの技折 ConstraintLayout](http://yuki312.blogspot.jp/2017/03/constraintlayout.html)
 
 # RecyclerView
 ListViewにかわる新たなリストのコンポーネント  
