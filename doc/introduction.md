@@ -51,6 +51,7 @@ Finishを選択。
 ![edit_main_activity2.png](./image/edit_main_activity2.png)
 
 ついでに、右側のAttributesのID欄に`button`というIDが追加されている事を確認しておこう。  
+このIDはコンポーネントの追加時に自動で割り振られるので、もし`button2`など別の値になっていた場合は`button`に変更しておく。  
 ソースコードからボタンやテキストなどViewを取得したい時、このIDが必要となる。
 
 ## 遷移先の画面を作成
@@ -67,7 +68,10 @@ Finishを選択。
 `activity_sub.xml`を開き、先ほどと同じようにTextViewを追加してみよう。  
 
 PaletteからTextViewをプレビューにドラッグ&ドロップする。  
-次に、追加したTextViewの枠の点を各画面端へドラッグし、画面中央に配置する。  
+次に、追加したTextViewの枠の点を各画面端へドラッグし、画面中央に配置する。
+
+ここで、先程のボタンと同様に右上のID欄を確認して`textView`というIDが付与されているか確認しておく。  
+もし`textView2`など別の値が入っていたら、`textView`に修正しておこう。  
 ![edit_sub_activity1.png](./image/edit_sub_activity1.png)
 
 ## 画面遷移の処理を実装
@@ -102,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 最後に`SubActivity.java`でさっきintentに付与したデータを取得してTextViewに表示します。  
+`Intent`や`Button`が赤字で表示されている場合は、インポートされていないので、`Alt + Enter`を押してインポートしてあげよう。
 
 ```java
 public class SubActivity extends AppCompatActivity {
@@ -126,10 +131,14 @@ public class SubActivity extends AppCompatActivity {
 
 ## トラブルシューティング
 何か問題があった場合は、エラーを確認してみたり、どんどん質問してみてください。
+
+エディターの左下にあるLogcatをクリックすると、端末からのログを確認できます。エラーが出た場合はここを確認して何が悪いのか？を考えてみると良いでしょう。
+
 ##### 実機にインストールすると、ボタンの場所がずれている
 使用しているConstraintLayoutというレイアウトは、ボタンの枠の点が1つも接続されていないと、変な場所に配置されてしまいます。レイアウトファイルを見直してみてください。
 
 ##### 今回のアプリが落ちる場合に考えられること
 - レイアウトに配置した要素のIDと、ソースコードから指定したIDが間違っていないか
 - `Intent.putExtra()`の第一引数と、`intent.getStringExtra()`の引数が間違っていないか
+- ライブラリが正しくインポートされているか(Alt + Enterを押してみる)
 - etc...
